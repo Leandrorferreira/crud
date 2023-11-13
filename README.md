@@ -1,8 +1,9 @@
 # Java Spring Product API - CRUD
 
-## Tecnologias:
+## Tech:
 - Java 
-- Spring JPA
+- Spring 
+- JPA
 - Flyway
 - Lombok
 - postgresql

@@ -5,10 +5,10 @@ import lombok.*;
 
 @Table(name="product")
 @Entity(name="product")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(of="id")
 public class Product {
 
@@ -17,5 +17,10 @@ public class Product {
     private String id;
 
     private String name;
-    private Number price_in_cents;
+    private Integer price_in_cents;
+
+    public Product(RequestProductDTO dto) {
+        this.name = dto.name();
+        this.price_in_cents = dto.price_in_cents();
+    }
 }
