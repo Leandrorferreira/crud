@@ -35,11 +35,31 @@ public class ProductController {
     @PutMapping
     public ResponseEntity updateProduct(@RequestBody @Valid RequestProductDTO data) {
         Optional<Product> product = repository.findById(data.id());
-        product.get().setName(data.name());
-        product.get().setPrice_in_cents(data.price_in_cents());
+        if(product.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produt is not found");
+        }
+        Product selectedProduct = product.get();
 
-        repository.save(product.get());
+        selectedProduct.setName(data.name());
+        selectedProduct.setPrice_in_cents(data.price_in_cents());
 
-        return ResponseEntity.ok(product);
+        repository.save(selectedProduct);
+
+        return ResponseEntity.ok(selectedProduct);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteProduct(@PathVariable String id) {
+        System.out.println("estou aqui: " + id);
+        Optional<Product> product = repository.findById(id);
+        if(product.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produt is not found");
+        }
+
+        Product selectedProduct = product.get();
+
+        repository.delete(selectedProduct);
+
+        return ResponseEntity.ok("Product deleted successfully.");
     }
 }
