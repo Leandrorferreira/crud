@@ -38,6 +38,16 @@ public class ProductRepositoryTest {
         assertThat(Objects.equals(result.getPrice_in_cents(), dto.price_in_cents())).isTrue();
     }
 
+    @Test
+    @DisplayName("Should not get Product from database when product not exists")
+    void findByIdError() {
+        RequestProductDTO dto = new RequestProductDTO("123456", "Product", 4500);
+
+        List<Product> products = this.repository.findAll();
+
+        assertThat(products.isEmpty()).isTrue();
+    }
+
     private void createProduct(RequestProductDTO dto) {
         Product product = new Product(dto);
         this.entityManager.persist(product);
